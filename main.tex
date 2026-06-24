@@ -1,0 +1,1236 @@
+
+\def\ShowAllDegrees{yes} %select yes-no
+
+
+\documentclass[10pt, letterpaper]{article}
+
+% Packages:
+\usepackage{colortbl}  % Package to color tables
+\usepackage{ifthen}  % Package for conditional logic
+\usepackage[
+    ignoreheadfoot, % set margins without considering header and footer
+    top=2 cm, % seperation between body and page edge from the top
+    bottom=2 cm, % seperation between body and page edge from the bottom
+    left=2 cm, % seperation between body and page edge from the left
+    right=2 cm, % seperation between body and page edge from the right
+    footskip=1.0 cm, % seperation between body and footer
+    % showframe % for debugging 
+]{geometry} % for adjusting page geometry
+\usepackage[explicit]{titlesec} % for customizing section titles
+
+\usepackage{tabularx} % for making tables with fixed width columns
+\usepackage{array} % tabularx requires this
+\usepackage[dvipsnames]{xcolor} % for coloring text
+\definecolor{primaryColor}{RGB}{0, 79, 144} % define primary color
+\definecolor{Lightblue}{RGB}{173, 216, 230}
+\definecolor{white}{RGB}{255 255 255}
+\usepackage{enumitem} % for customizing lists
+\usepackage{fontawesome5} % for using icons
+\usepackage{amsmath} % for math
+\usepackage[
+    pdftitle={Nahid Kalantaryardebily's CV},
+    pdfauthor={Nahid Kalantaryardebily},
+    pdfcreator={LaTeX with RenderCV},
+    colorlinks=true,
+    urlcolor=primaryColor
+]{hyperref} % for links, metadata and bookmarks
+\usepackage[pscoord]{eso-pic} % for floating text on the page
+\usepackage{calc} % for calculating lengths
+\usepackage{bookmark} % for bookmarks
+\usepackage{lastpage} % for getting the total number of pages
+\usepackage{changepage} % for one column entries (adjustwidth environment)
+\usepackage{paracol} % for two and three column entries
+\usepackage{ifthen} % for conditional statements
+\usepackage{needspace} % for avoiding page brake right after the section title
+\usepackage{iftex} % check if engine is pdflatex, xetex or luatex
+\usepackage{xcolor}
+\definecolor{lightblue}{RGB}{230, 240, 255}
+\usepackage{indentfirst}
+\usepackage{verbatim}
+
+
+
+% Ensure that generate pdf is machine readable/ATS parsable:
+\ifPDFTeX
+    \input{glyphtounicode}
+    \pdfgentounicode=1
+    \usepackage[T1]{fontenc}
+    \usepackage[utf8]{inputenc}
+    \usepackage{lmodern}
+\fi
+
+\usepackage[default, type1]{sourcesanspro} 
+% \usepackage[table]{xcolor} % for coloring table rows
+% \definecolor{lightblue}{rgb}{0.9,0.95,1} % Define a custom light blue color
+% Some settings:
+\AtBeginEnvironment{adjustwidth}{\partopsep0pt} % remove space before adjustwidth environment
+\pagestyle{empty} % no header or footer
+\setcounter{secnumdepth}{0} % no section numbering
+\setlength{\parindent}{0pt} % no indentation
+\setlength{\topskip}{0pt} % no top skip
+\setlength{\columnsep}{0.105cm} % set column seperation
+\makeatletter
+\let\ps@customFooterStyle\ps@plain % Copy the plain style to customFooterStyle
+\patchcmd{\ps@customFooterStyle}{\thepage}{
+    \color{gray}\textit{\small Nahid Kalantaryardebily - Page \thepage{} of \pageref*{LastPage}}
+}{}{} % replace number by desired string
+\makeatother
+\pagestyle{customFooterStyle}
+
+\titleformat{\section}{
+    % avoid page braking right after the section title
+    \needspace{4\baselineskip}
+    % make the font size of the section title large and color it with the primary color
+    \Large\color{primaryColor}
+}{
+}{
+}{
+    % print bold title, give 0.15 cm space and draw a line of 0.8 pt thickness
+    % from the end of the title to the end of the body
+    \textbf{#1}\hspace{0.15cm}\titlerule[0.8pt]\hspace{-0.1cm}
+}[] % section title formatting
+
+\titlespacing{\section}{
+    % left space:
+    -1pt
+}{
+    % top space:
+    0.2 cm
+}{
+    % bottom space:
+    0.15 cm
+} % section title spacing
+
+% \renewcommand\labelitemi{$\vcenter{\hbox{\small$\bullet$}}$} % custom bullet points
+\newenvironment{highlights}{
+    \begin{itemize}[
+        topsep=0.10 cm,
+        parsep=0.10 cm,
+        partopsep=0pt,
+        itemsep=0pt,
+        leftmargin=0.2 cm + 10pt
+    ]
+}{
+    \end{itemize}
+} % new environment for highlights
+
+\newenvironment{highlightsforbulletentries}{
+    \begin{itemize}[
+        topsep=0.10 cm,
+        parsep=0.10 cm,
+        partopsep=0pt,
+        itemsep=0pt,
+        leftmargin=10pt
+    ]
+}{
+    \end{itemize}
+} % new environment for highlights for bullet entries
+
+
+\newenvironment{onecolentry}{
+    \begin{adjustwidth}{
+        0.02 cm + 0.00001 cm
+    }{
+        0.2 cm + 0.00001 cm
+    }
+}{
+    \end{adjustwidth}
+} % new environment for one column entries
+
+\newenvironment{twocolentry}[2][]{
+    \onecolentry
+    \def\secondColumn{#2}
+    \setcolumnwidth{\fill, 2.8 cm}
+    \begin{paracol}{2}
+}{
+    \switchcolumn \raggedleft \secondColumn
+    \end{paracol}
+    \endonecolentry
+} % new environment for two column entries
+
+\newenvironment{threecolentry}[3][]{
+    \onecolentry
+    \def\thirdColumn{#3}
+    \setcolumnwidth{1 cm, \fill, 2.8 cm}
+    \begin{paracol}{3}
+    {\raggedright #2} \switchcolumn
+}{
+    \switchcolumn \raggedleft \thirdColumn
+    \end{paracol}
+    \endonecolentry
+} % new environment for three column entries
+
+\newenvironment{header}{
+    \setlength{\topsep}{0pt}\par\kern\topsep\centering\color{primaryColor}\linespread{1.5}
+}{
+    \par\kern\topsep
+} % new environment for the header
+
+\newcommand{\placelastupdatedtext}{% \placetextbox{<horizontal pos>}{<vertical pos>}{<stuff>}
+  \AddToShipoutPictureFG*{% Add <stuff> to current page foreground
+    \put(
+        \LenToUnit{\paperwidth-2 cm-0.2 cm+0.05cm},
+        \LenToUnit{\paperheight-1.0 cm}
+    ){\vtop{{\null}\makebox[0pt][c]{
+        \small\color{gray}\textit{Last updated in September 2024}\hspace{\widthof{Last updated in September 2024}}
+    }}}%
+  }%
+}%
+
+%***************************************************
+% having icon beside hyperlink
+
+% % save the original href command in a new command:
+% \let\hrefWithoutArrow\href
+
+% % new command for external links:
+% \renewcommand{\href}[2]{\hrefWithoutArrow{#1}{\ifthenelse{\equal{#2}{}}{ }{#2 }\raisebox{.15ex}{\footnotesize \faExternalLink*}}}
+
+%***************************************************
+% Not having icon beside hyperlink 
+
+% save the original href command in a new command:
+\let\hrefWithoutArrow\href
+
+% external links WITHOUT icon:
+\renewcommand{\href}[2]{\hrefWithoutArrow{#1}{#2}}
+
+%***************************************************
+
+
+% Define the switch variable (set to 1 or 0)
+\newcommand{\showtext}{1}  % Change to 0 to hide the text
+
+\begin{document}
+    \newcommand{\AND}{\unskip
+        \cleaders\copy\ANDbox\hskip\wd\ANDbox
+        \ignorespaces
+    }
+    \newsavebox\ANDbox
+    \sbox\ANDbox{}
+
+    % \placelastupdatedtext
+    \begin{header}
+        \fontsize{22 pt}{22 pt}
+        \textbf{Nahid Kalantaryardebily}
+
+        \vspace{0.3 cm}
+
+        \normalsize
+        \mbox{{\footnotesize\faMapMarker*}\hspace*{0.13cm}Blacksburg-USA}%
+        \kern 0.25 cm%
+        \AND%
+        \kern 0.25 cm%
+        \mbox{\hrefWithoutArrow{mailto:NahidKalantary@vt.edu}{{\footnotesize\faEnvelope[regular]}\hspace*{0.13cm}NahidKalantary@vt.edu}}%
+        \kern 0.25 cm%
+        \AND%
+        % \kern 0.25 cm%
+        % \mbox{\hrefWithoutArrow{tel:+1-470-960-93-74}{{\footnotesize\faPhone*}\hspace*{0.13cm}+1 470 960 93 74}}%
+        % \kern 0.25 cm%
+        % \AND%
+        % \kern 0.25 cm%
+        % \mbox{\hrefWithoutArrow{https://yourwebsite.com/}{{\footnotesize\faLink}\hspace*{0.13cm}yourwebsite.com}}%
+        % \kern 0.25 cm%
+        \AND%
+        \kern 0.25 cm%
+        \mbox{\hrefWithoutArrow{https://www.linkedin.com/in/nahid-Kalantaryardebily-b7b02142}{{\footnotesize\faLinkedinIn}\hspace*{0.13cm}nahid-Kalantaryardebily}}%
+        \kern 0.25 cm%
+        % \AND%
+        % \kern 0.25 cm%
+        % \mbox{\hrefWithoutArrow{https://join.skype.com/invite/Owqr2NWS0JFx}
+        % {{\footnotesize\faSkype}\hspace*{0.13cm}Armin-A.P.}}%
+        % \kern 0.25 cm%
+        % \AND%
+        % \kern 0.25 cm%
+        % \mbox{\hrefWithoutArrow{https://github.com/yourusername}{{\footnotesize\faGithub}\hspace*{0.13cm}armin-ap}}%
+        \AND%
+        \kern 0.25 cm%
+        \mbox{\hrefWithoutArrow{https://scholar.google.com/citations?user=L-XM3YAAAAAJ&hl=en}
+        {\hspace*{0.13cm}Google Scholar}}
+        \kern 0.25 cm%
+    \end{header}
+
+    \vspace{0.3 cm - 0.3 cm}
+%*********************************************************************** 
+\section{Selected Highlights}
+\begin{highlights}
+    \item 9 peer-reviewed journal publications, including 3 first/co-first-author articles in IEEE Transactions on Medical Robotics and Bionics, Journal of Neuroscience Methods, and Extreme Mechanics Letters.
+    %9 peer-reviewed journal publications (3 first- or co-first-author papers), with 3 additional manuscripts in preparation
+    %\item 11 journal publications (5 first/co-first author)
+    \item Co-inventor on 1 provisional patent and Virginia Tech technology disclosure %and {\href{https://vtip.technologypublisher.com/technology/61586}{\color{black}{technology disclosure}}}
+    \item Completed 14 peer-review assignments for 8 manuscripts across 3 journals and 2 IEEE conferences
+    \item Contributed to >\$40,000 in research funding
+    \item Recipient of the Joseph Frank Hunkler Memorial Scholarship (includes a \$35,000 annual fellowship and full in-state tuition support) and the Daniel Frederick Scholarship.
+\end{highlights}
+
+
+\section{Research Interest}
+\vspace{-.2em}
+Machine Learning for Robotic Control and Perception; Robotics and Automation; Tactile Sensing and Haptics; Human–Robot Interaction; Neuroengineering and Sensorimotor Neural Interfaces; Wearable Technology. %System Identification and State Estimation.%; Dynamics, Control, and Whole-Body Motion Planning; Autonomous Navigation and Guidance Systems. Human-Subject Experimental Research in Stroke;
+%Neuroengineering, Human Subjects Experimental Research, Stroke, Sensorimotor Neural Engineering, Haptics, Robotics, Machine Learning, Filtering, System Identification, Dynamics and Control, Automation, Guidance and Navigation .
+\vspace{-.4em}
+
+%*******************************************************************************
+\ifthenelse{\equal{\ShowAllDegrees}{yes}}{
+    \section{Education}
+    
+        \begin{threecolentry}{\textbf{Ph.D.}}{
+            Blacksburg,~USA\\
+            2022 – Present%(Expected)
+        }
+            \textbf{Engineering Mechanics} (GPA: 4/4) - Ph.D. Candidate\\
+            %, \textbf{M.Sc.} along the way) \\
+            {Virginia Polytechnic Institute \& State University}
+        \end{threecolentry}
+\vspace{.7em}
+%**************
+        \begin{threecolentry}{\textbf{M.S.}}{
+            Blacksburg,~USA\\
+            2022 – 2025
+        }
+            \textbf{Engineering Mechanics} (GPA: 4/4) \\ 
+            {Virginia Polytechnic Institute \& State University}
+        \end{threecolentry}
+\vspace{.3em}
+%*******
+        \begin{threecolentry}{\textbf{M.S.}}{
+            Milan,~Italy\\
+            2016 – 2018
+        }
+            \textbf{Automation and Control Engineering} (GPA: 110/110) \\ 
+            {Polytechnic University of Milan}\\
+            Thesis:~{\href{https://www.researchgate.net/publication/375373029_Design_and_Development_of_a_Hardware-in-_the-LoopHiL_Test_Platform_for_Powertrain}{\color{black}{Design and Development of a Hardware-in-the-Loop Test Platform for Powertrain}}}
+        \end{threecolentry}
+\vspace{.3em}
+%*******
+        \begin{threecolentry}{\textbf{M.S.}}{
+            Tehran,~Iran\\
+            2009 – 2011
+        }
+            \textbf{Flight Mechanics} (GPA: 18.6/20) \\ 
+            {Amirkabir University of Technology}\\
+            Thesis (in persian): {{\color{black}{Integrated Guidance and Control of UAVs Using Sliding Mode Control and Constrained Curves}}}
+        \end{threecolentry}
+        
+%**************
+
+\vspace{.7em}
+
+        \begin{threecolentry}{\textbf{B.S.}}{
+            Tehran,~Iran\\
+            2005 – 2013
+        }
+            \textbf{Electrical Engineering - Control} (GPA: 17.2/20) \\ 
+            {Amirkabir University of Technology}
+        \end{threecolentry}
+        
+% \vspace{-1em}
+\vspace{.3em}
+        \begin{threecolentry}{\textbf{B.S.}}{
+            Tehran,~Iran\\
+            2005 – 2009
+        }
+            \textbf{Aerospace Engineering} (GPA: 17.8/20) \\ 
+            {Amirkabir University of Technology}
+        \end{threecolentry}
+
+}{
+%*******************************************************************************
+%*******************************************************************************
+% \ifthenelse{\equal{\ShowAllDegrees}{no}}{
+    \section{Education}
+    
+        \begin{threecolentry}{\textbf{Ph.D.}}{
+            Blacksburg,~USA\\
+            2022–2026%(Expected)
+        }
+            \textbf{Engineering Mechanics} (GPA: 4/4, \textbf{M.Sc.} along the way) \\
+            {Virginia Polytechnic Institute \& State University}
+        \end{threecolentry}
+\vspace{.3em}
+%**************
+%         \begin{threecolentry}{\textbf{M.Sc}}{
+%             2022 – 2025
+%         }
+%             {Engineering Mechanics}(GPA: 4/4) \\ 
+%             \textbf{Virginia Polytechnic Institute \& State University}, Blacksburg, Virginia, United States
+%         \end{threecolentry}
+% \vspace{.3em}
+%*******
+        \begin{threecolentry}{\textbf{M.S.}}{
+            Milan,~Italy\\
+            2016 – 2018
+        }
+            \textbf{Automation and Control Engineering} (GPA: 110/110) \\ 
+            {Polytechnic University of Milan}
+        \end{threecolentry}
+% \vspace{.3em}
+%*******
+        % \begin{threecolentry}{\textbf{M.Sc}}{
+         %   Tehran,~Iran\\
+        %     2009 – 2011
+        % }
+        %     {Flight Mechanics}(GPA: 18.6/20) \\ 
+        %     \textbf{Amirkabir University of Technology}, Tehran, Iran
+        % \end{threecolentry}
+        
+%**************
+
+\vspace{.3em}
+
+        \begin{threecolentry}{\textbf{B.S.}}{
+
+            2005 – 2013
+        }
+            \textbf{Electrical Engineering - Control} (GPA: 17.2/20) \\ 
+        \end{threecolentry}
+        
+\vspace{-1em}
+
+        \begin{threecolentry}{\textbf{}}{
+            Tehran,~Iran\\
+            2005 – 2009
+        }
+            \textbf{Aerospace Engineering} (GPA: 17.8/20) \\ 
+            {Amirkabir University of Technology}
+        \end{threecolentry}
+
+}
+
+%*******************************************************************************
+\vspace{-.4em}
+\section{Awards \& Honors}
+\begin{twocolentry}{
+        2026~-~2027
+        }
+\begin{highlights}
+\item \textbf{Joseph Frank Hunkler Memorial Scholarship}, Graduate School, Virginia Tech — competitive fellowship awarded for research promise and academic achievement; includes a \$35,000 annual stipend and full in-state tuition support.
+\end{highlights}
+\end{twocolentry}
+
+\begin{twocolentry}{
+        2025~-~2026
+        }
+\begin{highlights}
+\item \textbf{Daniel Frederick Scholarship}, Department of Mechanical Engineering, Virginia Tech — merit-based award for academic excellence, research creativity, and strong doctoral exam performance.
+\end{highlights}
+\end{twocolentry}
+
+\begin{twocolentry}{
+        2008~-~2009
+        }
+\begin{highlights}
+\item \textbf{Direct Admission and Full Scholarship to Master’s Program in Flight Mechanics}, Amirkabir University of Technology — competitive honor granted without an entrance exam for top-ranked students.
+\end{highlights}
+\end{twocolentry}
+
+\begin{twocolentry}{
+        2007~-~2008
+        }
+\begin{highlights}
+\item \textbf{Merit-Based Scholarship for a Second Bachelor’s Degree}, Amirkabir University of Technology — competitive scholarship awarded for strong academic performance.
+\end{highlights}
+\end{twocolentry}
+
+
+%*******************************************************************************
+
+\vspace{-.4em}
+%*******************************************************************************
+\section{Grants}
+
+% \begin{twocolentry}{
+%         2026~-~2027
+%         }
+% \begin{highlights}
+
+% \item Title: Impact of Movement Following Stroke on Perceiving Physical Stimuli during Bimanual Tasks\\
+% Funder: Dana Foundation Grant\\
+% PI: Netta Gurari\\
+% Role: Graduate Research Assistant\\
+% Contribution: Involved with grant writing, implementation, and data collection\\
+% Amount Awarded: \$70,000 \\
+% \end{highlights}
+% \end{twocolentry}
+
+
+\begin{twocolentry}{
+        2025~-~2026
+        }
+\begin{highlights}
+
+\item Title: Impact of Movement Following Stroke on Perceiving Physical Stimuli during Bimanual Tasks\\
+Funder: 4-VA Collaborative Research Grant\\
+PI: Netta Gurari\\
+Role: Graduate Research Assistant\\
+Contribution: Involved with grant writing, implementation, and data collection\\
+Amount Awarded: \$30,000 \\
+\end{highlights}
+\end{twocolentry}
+% \vspace{-.5em}
+
+\begin{twocolentry}{
+        2025~-~2026
+        }
+\begin{highlights}
+
+\item Title: Impact of Movement on Perceiving Touch Stimuli during Tasks that use Both Arms following Stroke\\
+Funder: Radford University SEED Grant Program
+PI: Arco Paul\\
+Role: Graduate Research Assistant \\
+Contribution: Involved with grant writing, implementation, and data collection\\
+Amount Awarded: \$10,000 \\
+\end{highlights}
+\end{twocolentry}
+
+
+ 
+% \begin{twocolentry}{
+%         Under Review
+%         }
+% \begin{highlights}
+
+% \item Title: Impact of Movement Following Stroke on Perceiving Physical Stimuli during Bimanual Tasks
+% PI: Netta Gurari\\
+% GRA: Nahid Kalantaryardebily\\
+% % Amount Awarded: Under Review\\
+% Funding Source: NSF Career Research Grant\\
+% \end{highlights}
+% \end{twocolentry}
+
+
+
+% \begin{twocolentry}{
+%         2025~-~2026
+%         }
+% \begin{highlights}
+% \item Title: Impact of Movement Following Stroke on Perceiving Physical Stimuli during Bimanual Tasks
+% PI: Netta Gurari\\
+% GRA: Nahid Kalantaryardebily\\
+% Amount Awarded: Under Review\\
+% Funding Source: 4-VA Collaborative Research Grant\\
+% \end{highlights}
+% \end{twocolentry}
+
+\vspace{-1.8em}
+%*******************************************************************************
+\section{Journal Publications}
+\begin{onecolentry}
+\hspace{1.5em} \textbf{---------------------------------------------------------- First/Co-First Author Journal Articles ----------------------------------------------------------}\\
+\begin{highlights}
+%\vspace{-1em}
+%\textbf{---------------------------------------------------------- Peer-Reviewed Journal Publications ----------------------------------------------------------}\\
+%\vspace{-1em}
+\vspace{-1em}
+% \vspace{-1em}
+    \item \textbf{Kalantaryardebily N.}, Feldbush A. C., Kahak A., Li S., Gurari N. ``{\href{https://ieeexplore.ieee.org/document/11311108}{\color{black}{Novel Compact Tactile Stimulator with Sensing: Application for Individuals with a Brain Injury and MRI}}}'' \textit{IEEE Transactions on Medical Robotics and Bionics} (2026).
+
+    \item Kahak A.*, Ahmed M. S.*, \textbf{Kalantaryardebily N.*}, Kulkarni H., Gurari N., Shahab S., Li S. ``{\href{https://www.sciencedirect.com/science/article/abs/pii/S2352431625001361}{\color{black}{High-Precision Fluidic Kirigami Metasurface for Ultrasonic Holographic Lensing and Haptic Interfacing}}}'' \textit{Extreme Mechanics Letters}, 81, 102424 (2025). - {\textit{Authors marked with * contributed equally}}
+
+    
+    \item \textbf{Kalantaryardebily N.*}, Feldbush A. C.*, Faubion-Trejo R., Lisinski J., Reddy N. A., Bright M. G., LaConte S. M., Gurari N. ``{\href{https://www.sciencedirect.com/science/article/abs/pii/S0165027025002274}{\color{black}{Development and Testing of an MR-Compatible Tactile Stimulator System: Application for Individuals with a Brain Injury}}}'' \textit{Journal of Neuroscience Methods}, 424, 110583 (2025). - {\textit{Authors marked with * contributed equally}}
+    
+
+\textbf{------------------------------------------------------------------ Co-Author Journal Articles ------------------------------------------------------------------}\\
+\vspace{-1.2em}
+\item Tirrell E. M., \textbf{Kalantaryardebily N.}, Hocker J., Bowles C., Parcetich K., Gurari N. ``{\href{https://journals.physiology.org/doi/abs/10.1152/jn.00276.2025}{\color{black}{Perceiving Auditory Stimuli Impacts Conscious Perception of Electrotactile Stimuli in Older Adults}}}'' \textit{Journal of Neurophysiology} (2026).
+
+    \item Tirrell E. M., \textbf{Kalantaryardebily N.}, Hocker J., Bowles C., Parcetich K., Gurari N. "{\href{https://www.sciencedirect.com/science/article/abs/pii/S0166432825004280}{\color{black}{Impact of an Auditory Cognitive Load on Consciously Perceiving Electrotactile Stimuli in Young Adults}}}'' \textit{Behavioral Brain Research}, 496, 115841 (2026).
+
+    \item Feldbush A. C., \textbf{Kalantaryardebily N.}, Reddy N. A., Soldate J., Faubion-Trejo R., Lisinski J., Bright M. G., Gurari N., LaConte S. M. ``{\href{https://direct.mit.edu/imag/article/doi/10.1162/IMAG.a.1236/136459/Tactile-Force-Evokes-a-Biphasic-BOLD-Response-in}{\color{black}{Tactile Pressure Evokes a Biphasic BOLD Response in Ipsilateral Primary Somatosensory Cortex}}}'' \textit{Imaging Neuroscience} (2026).
+
+
+
+    
+    \item Tirrell E. M., \textbf{Kalantaryardebily N.}, Feldbush A. C., Sydnor L. C., Grubb C., Parcetich K., Gurari N. ``{\href{https://link.springer.com/article/10.1007/s00221-025-07044-5}{\color{black}{Considerations for Tactile Perceptual Assessments: Impact of Arm Dominance, Nerve, Location, and Sex in Young and Older Adults}}}'' \textit{Experimental Brain Research}, 243, 92 (2025).
+    
+    \item Paul A. P., Nayak K., Sydnor L., \textbf{Kalantaryardebily N.}, Parcetich K. M., Miner D. G., Wafford Q. E., Sullivan J. E., Gurari N. ``{\href{https://jneuroengrehab.biomedcentral.com/articles/10.1186/s12984-024-01397-8}{\color{black}{A Scoping Review on Examination Approaches for Identifying Tactile Deficits at the Upper Extremity in Individuals with Stroke}}}'' \textit{Journal of Neuroengineering and Rehabilitation}, 21, 99 (2024).
+
+    
+    \item Hamedi B., \textbf{Kalantaryardebily N.}, Alipanahi A., Taheri S. ``{\href{https://www.hrpub.org/download/20231030/UJME2-15134284.pdf}{\color{black}{Estimating Tire Forces using MLP Neural Network and LM Algorithm: A Comparative Study}}}'' \textit{Universal Journal of Mechanical Engineering}, 11(3), 64–81 (2023).
+
+% \hspace{2.5em}
+\textbf{ --------------------------------------------------------- Research Manuscripts in Preparation ---------------------------------------------------------}
+    \item \textbf{Kalantaryardebily N.}, Mahany S., Parcetich K., Gurari N. ``{\href{ }{\color{black}{Development and Validation of a Somatosensory Assessment System for Investigating the Impact of Voluntary Movement on Tactile Perception}}}'' (In preparation)% for submission to IEEE Transactions on Neural Systems and Rehabilitation Engineering)% \textit{IEEE Transactions on Neural Systems and Rehabilitation Engineering} .
+
+    \item \textbf{Kalantaryardebily N.}, Ahrens M., Yau J., Paul A., Gurari N. ``{\href{ }{\color{black}{Impact of Arm Activation on Detecting Bilateral Stimulation}}}'' (In preparation)% for submission to IEEE Transactions on Haptics)% (Submitted to \textit{IEEE Transactions on Haptics}).
+
+    \item Parcetich K., \textbf{Kalantaryardebily N.}, Nape S., Sulzer J., Pitterson N., Gurari N. ``{\href{ }{\color{black}{Immersive Neurorehabilitation Education Improves Competencies Relevant to Human-Centered Biomedical Engineering Practice}}}'' (In preparation)
+
+%\textbf{----------------------------------------------------------------------------- Under Review  ---------------------------------------------------------------------------}
+    %\vspace{2em}
+
+
+%\textbf{------------------------------------------------------------ Manuscripts Under preparation ------------------------------------------------------------}
+
+    % \item Feldbush A. C., \textbf{Kalantaryardebily N.}, Reddy N. A., Soldate J., Faubion-Trejo R., Lisinski J., Bright M. G., LaConte S. M., Gurari N. "{\href{https://www.biorxiv.org/content/10.1101/2025.08.11.669660v1}{\color{black}{Tactile Pressure Evokes a Biphasic BOLD Response in Ipsilateral Primary Somatosensory Cortex}}}" (Submitted to \textit{Imaging Neuroscience})
+
+\end{highlights}
+\end{onecolentry}
+
+\vspace{-.6em}
+\section{Intellectual Property}
+\begin{onecolentry}
+\begin{highlights}
+
+% \textbf{---------------------------------------------------------------------- Intellectual Property ----------------------------------------------------------------------}
+
+    \item \textbf{Kalantaryardebily N.}, Gurari N., Kahak A., Li S.
+“MR-Compatible Force Stimulation Device Featuring Kirigami, Real-Time Sensing, and Force Estimation”
+Provisional Patent Application, Virginia Tech Intellectual Property (VTIP), Docket No. 222207-8210 (2025). 
+\href{https://vtip.technologypublisher.com/technology/61586}{Technology Available for Licensing}
+    
+%\textbf{------------------------------------------------------------ Thesis ------------------------------------------------------------}
+
+
+    %\item \textbf{Kalantaryardebily N.}. "{\href{https://www.researchgate.net/publication/375373029_Design_and_Development_of_a_Hardware-in-_the-LoopHiL_Test_Platform_for_Powertrain}{\color{black}{Design and Development of a Hardware-in-the-Loop Test Platform for Powertrain}}}" MSc thesis, 2018
+
+    
+
+\end{highlights}
+\end{onecolentry}
+
+%*******************************************************************************
+\vspace{-.6em}
+\section{Presentations}
+\begin{onecolentry}
+\hspace{1.5em} \textbf{------------------------------------------------------ Peer-Reviewed Conference Publications -------------------------------------------------------}
+\begin{highlights}
+% \vspace{-.2em}%
+    %\textbf{------------------------------------------------------ Peer-Reviewed Conference Publications -------------------------------------------------------}\\
+ \vspace{-.21em}
+    \item Rekabi-Ban F., Saadat M., \textbf{Kalantaryardebily N.}, Pan H., Stefanec M., Fedotoff L. A., Krajnik T., Arvin F. ``{\href{https://ieeexplore-ieee-org.ezproxy.lib.vt.edu/document/10666576}{\color{black}{Active Vibration Reduction for the RoboRoyale Autonomous Robotic Observation Mechanism}}}'' \textit{2024 IEEE Conference on Control Technology and Applications (CCTA)}, Newcastle upon Tyne, United Kingdom (2024).
+
+    
+    \item Basaeri H., Yousefi-Koma A., \textbf{Kalantaryardebily N.} ``{\color{black}{Design and Modeling of a Ducted Fan Manned Aerial Vehicle}}'' \textit{21st Annual International Conference on Mechanical Engineering – ISME2013}, Tehran, Iran (2013).
+    
+    \item \textbf{Kalantaryardebily N.}, Mortazavi M., Babai A. ``{\color{black}{Integrated Guidance and Control of UAVs Using Sliding Mode Control and Constrained Curves}}'' \textit{11th Iranian Aerospace Conference}, Tehran, Iran (2012). In Persian.
+
+
+\textbf{------------------------------------------------------------------ Hands-On Demonstrations ------------------------------------------------------------------}
+
+\item Rathore S., Kim A., Segal J., Hollar R., Smith N., Rios J., \textbf{Kalantaryardebily N.}*, Feldbush A. C., Todd J., Parcetich K., Gurari N.
+``MR-Compatible Tactile Stimulator for Individuals with Stroke'' World Haptics Conference (WHC), Delft, Netherlands (2023) \textbf{\textit{Author marked with * denotes the presenter}}
+%\end{highlights}
+%\end{onecolentry}
+
+%\vspace{-.4em}
+%\section{Abstract Publications}
+%\begin{onecolentry}
+%\hspace{1.5em}
+\textbf{--------------------------------------------------------- Peer-Reviewed Abstract Publications ----------------------------------------------------------}
+%\begin{highlights}
+
+\item \textbf{Kalantaryardebily N.}, Ahrens M., Yau J., Paul A., Gurari N. ``Sensorimotor Gating of Tactile Detection Scales with Motor Activation During Unilateral and Bilateral Elbow Flexion.'' (Under Review) %Poster presented at Society for Neuroscience Annual Meeting, San Diego, California 
+
+\item Gurari N., \textbf{Kalantaryardebily N.}, Nape S., Pitterson N., Sulzer J., Parcetich K. ``Immersive Neurorehabilitation Education Improves Self-Reported Competencies Relevant to Human-Centered Biomedical Engineering Practice.'' (Under Review)%Poster presented at Biomedical Engineering Society Annual Meeting, Orlando, Florida (Under Review)
+
+\item \textbf{Kalantaryardebily N.}, Kahak A., Mahaney S., Soldate J., Li S., Gurari N. ``Development and Preliminary Testing of a Compact Stimulator for Objective Tactile Assessment.'' Poster presented at American Society of Neurorehabilitation (ASNR), Long Beach, California (2026)
+
+\item Feldbush A., \textbf{Kalantaryardebily N.}, Reddy N., Faubion-Trejo R., Soldate J., Lisinski J., Bright M. G., Gurari N., LaConte S. M. ``Tactile Pressure Evokes Biphasic BOLD Response in Ipsilateral Primary Somatosensory Cortex.'' Poster presented at Organization for Human Brain Mapping (OHBM), Brisbane, Australia (2025)
+% \vspace{2em}
+\item Nayak K. S., Sydnor L. C., Parcetich K., Paul A., Miner D. G., \textbf{Kalantaryardebily N.}, Wafford Q. E., Sullivan J. E., Gurari N. ``Assessments for Identifying Tactile Deficits at the Upper Extremity of Individuals with Stroke: Preliminary Results of a Scoping Review,'' Poster presented at American Society for Neurorehabilitation, San Antonio, Texas, USA (2024)
+
+% \vspace{2em}
+
+\textbf{----------------------------------------------------- Non-Peer-Reviewed Abstract Publications ------------------------------------------------------}
+\item \textbf{Kalantaryardebily N.}, Gurari N. ``Development and Characterization of a Novel MR-Compatible Tactile Stimulator with Force Estimation.'' Poster presented at Virginia Tech Graduate Research Symposium, Blacksburg, USA (2025)
+\item Elahimehr N., \textbf{Kalantaryardebily N.}, Gurari N. ``Measuring Peripheral Nerve Sensory Function Using Tactile Stimulation.'' Poster presented at Virginia Tech Research Symposium, Blacksburg, USA (2025)
+\item Vijay R., \textbf{Kalantaryardebily N.}, Feldbush A., LaConte S. M., Gurari N. ``Characterizing a Novel MR-Compatible Force Stimulator''. Poster presented at Virginia Tech, Fralin Biomedical Research Institute, Summer Research Programs Symposium, Roanoke, USA (2024)
+
+
+\end{highlights}
+\end{onecolentry}
+
+
+
+%*******************************************************************************
+\vspace{-.8em}
+\section{Peer-Review Activities}
+\begin{onecolentry}
+\vspace{-.5em}
+\begin{highlights}
+    % \item IEEE Transactions on Neural Systems and Rehabilitation Engineering (IEEE) 
+    \item IEEE Transactions on Haptics (IEEE) - 7 reviews % 6 reviews
+    \item Data in Brief (Elsevier) - 3 reviews
+    \item Discover Neuroscience (Springer Nature) - 2 reviews
+    % \item Scientific Reports (Springer Nature) - 1 review
+    \item IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) - 1 review
+    \item IEEE Conference on Control Technology and Applications (CCTA) - 1 review
+\end{highlights}
+\end{onecolentry}
+
+%*******************************************************************************
+\vspace{-.8em}
+\section{Teaching Experience}
+
+\begin{twocolentry}{
+        Spring 2026 
+        }
+            \textbf{{{Teaching Assistant, 
+            Virginia Tech, Undergraduate level, Neurorehabilitation Perspectives}}}\\
+\vspace{-1em}
+            \begin{highlights}
+
+                 \item Assisted in organizing the course material, logistics and immersion experience Mechanical Engineering seminar sessions and served as a GTA for an innovative, immersive Neurorehabilitation Perspectives course.
+        \end{highlights}
+\end{twocolentry}
+
+\begin{twocolentry}{
+        Fall 2025 
+        }
+            \textbf{{{Teaching Assistant, 
+            Virginia Tech, Graduate level, ME Graduate Seminar}}}\\
+\vspace{-1em}
+            \begin{highlights}
+
+                 \item Assisted in organizing and advertising Mechanical Engineering seminar sessions.
+        \end{highlights}
+\end{twocolentry}
+
+\begin{twocolentry}{
+        Fall 2024 
+        }
+            \textbf{{{Teaching Assistant, 
+            Virginia Tech, Undergraduate level, Mechanics of Deformable Bodies}}}\\
+\vspace{-1em}
+            \begin{highlights}
+
+                 \item Assisted in grading homework and course projects.
+        \end{highlights}
+\end{twocolentry}
+
+\begin{twocolentry}{
+        Spring 2023\\
+        Fall 2022\\
+        }
+            \textbf{{{Teaching Assistant, 
+            Virginia Tech, Undergraduate level,  Statics \& Structures}}}\\
+\vspace{-1em}
+            \begin{highlights}
+
+                 \item Assisted in grading midterm exams and held office hours to support students with problem-solving and homework.
+        \end{highlights}
+\end{twocolentry}
+
+\begin{twocolentry}{
+        2010~-~2013\\ 
+        2 Semesters\\
+        }
+            \textbf{{{Teaching Assistant, 
+            Amirkabir University of Technology, Undergraduate level, Dynamics I}}}\\
+\vspace{-1em}
+            \begin{highlights}
+
+                 \item Developed and delivered problem-solving lectures for undergraduate courses in Dynamics I, grading homework and Midterm exam.
+        \end{highlights}
+\end{twocolentry}
+
+\begin{twocolentry}{
+        2010~-~2013\\ 
+        2 Semesters\\
+        }
+            \textbf{{{Teaching Assistant, 
+            Amirkabir University of Technology, Undergraduate level, Dynamics II}}}\\
+\vspace{-1em}
+            \begin{highlights}
+
+                 \item Developed and delivered problem-solving lectures for undergraduate courses in Dynamics II, grading homework and Midterm exam.
+        \end{highlights}
+\end{twocolentry}
+\begin{twocolentry}{
+        2009~-~2013\\ 
+        3 Semesters\\
+        }
+            \textbf{{{Teaching Assistant, 
+            Amirkabir University of Technology, Undergraduate level, Vibration}}}\\
+\vspace{-1em}
+            \begin{highlights}
+
+                 \item Developed and delivered problem-solving lectures for undergraduate courses in Vibration, grading homework and Midterm exam.
+        \end{highlights}
+\end{twocolentry}
+
+%*******************************************************************************
+% \vspace{-.8em}
+% \section{Teaching Experience}
+
+
+% \begin{twocolentry}{
+%             Blacksburg,~USA\\
+%         2022 – Present
+%         }
+%             \textbf{{{Virginia Tech, Department of Mechanical Engineering}}}\\
+% \vspace{-1em}
+%             \begin{highlights}
+%                 %\item Leading and mentoring a student team in developing assistive goggle technology for individuals with brain injury and vision impairments.
+%                  \item Assisted course instructors with grading assignments and exams, and providing one-on-one support during office hours for two courses: Statics and Deformable Bodies.
+%                  \item Assisted in organizing Mechanical Engineering seminar sessions and served as a GTA for an innovative, immersive Neurorehabilitation Perspectives course.
+%         \end{highlights}
+% \end{twocolentry}
+
+
+% %***********
+%         % \vspace{-.2 cm}
+% %***********
+
+
+% \begin{twocolentry}{
+%             Tehran, Iran
+
+%         2009 – 2013
+%         }
+    
+%             \textbf{{{Amirkabir University of Technology, Department of Aerospace Engineering}}}\\
+% \vspace{-1em}
+%             \begin{highlights}
+%                 %\item Leading and mentoring a student team in developing assistive goggle technology for individuals with brain injury and vision impairments.
+%                  \item Developed and delivered problem-solving lectures for undergraduate courses in Dynamics I, Dynamics II, and Vibrations as a teaching assistant.
+%                  \item Assisted course instructors with lecture preparation, grading assignments and exams, and provided one-on-one support during office hours.
+%         \end{highlights}
+% \end{twocolentry}
+
+
+
+%*******************************************************************************
+\vspace{-.8em}
+\section{Mentoring Experience}
+\vspace{-.1em}
+% \begin{twocolentry}{
+%         2026 – Present
+%         }
+%             {{Master Student, Biomedical Engineering — Brandon Matheus Codera}}\\
+% \end{twocolentry}
+% \vspace{-1em}
+\begin{twocolentry}{
+        2025 – Present
+        }
+            {{Master Student, Biomedical Engineering — Scotty Mahany}}\\
+\end{twocolentry}
+\vspace{-1em}
+\begin{twocolentry}{
+        2023 – Present
+        }
+            {{Undergrad and Master Student, Biomedical Engineering — Rishit
+Vijay }}\\
+\end{twocolentry}
+
+\vspace{-1em}
+
+\begin{twocolentry}{
+        2025 – Present
+        }
+            {{Senior Design Team (Biomedical Engineering) — Smart Goggle Project}}\\
+\end{twocolentry}
+
+\vspace{-1em}
+\begin{twocolentry}{
+        2026 – Present
+        }
+            {{Undergrad Student, Biomedical Engineering — Saikrishna Ramasamy}}\\
+\end{twocolentry}
+
+\vspace{-1em}
+\begin{twocolentry}{
+        2025 – Present
+        }
+            {{Undergrad Student, Neuroscience — Nithya Ramani}}\\
+\end{twocolentry}
+
+\vspace{-1em}
+\begin{twocolentry}{
+        2025 – Present
+        }
+            {{Undergrad Student, Biomedical Engineering — Suhana Bhargava}}\\
+\end{twocolentry}
+
+\vspace{-1em}
+\begin{twocolentry}{
+        2025 – Present
+        }
+            {{Undergrad Student, Biomedical Engineering — Adharsh Sivaganesan }}\\
+\end{twocolentry}
+
+
+% \vspace{-1em}
+% \begin{twocolentry}{
+%         2023 – Present
+%         }
+%             {{Incoming Engineering Science and Mechanics Graduate Student }}\\
+% \end{twocolentry}
+
+\vspace{-1em}
+\begin{twocolentry}{
+        2023 – 2024
+        }
+            {{Senior Design Team (Mechanical Engineering) — Tactile Stimulator Project}}\\
+\end{twocolentry}
+
+
+
+\vspace{-1em}
+\begin{twocolentry}{
+        2023 – 2024
+        }
+            {{Undergrad Student, Biomedical Engineering — Katie
+Minutillo }}\\
+\end{twocolentry}
+
+\vspace{-1em}
+\begin{twocolentry}{
+        2023 – 2024
+        }
+            {{Undergrad Student, Biomedical Engineering — Anwitha
+Sanivarapu }}\\
+\end{twocolentry}
+
+\vspace{-1em}
+
+
+
+%*******************************************************************************
+\vspace{-.4em}
+   
+    \section{Work Experience}
+
+
+        \begin{twocolentry}{
+            Blacksburg,~USA\\
+        2022 – Present
+        }
+            \textbf{{\href{http://nettagurari.com/}{\color{black}\Large{Virginia Tech Robotics and Sensorimotor Control Laboratory}}}}\\
+\vspace{-.6em}
+
+            \begin{tabular}{ l l l }
+             \textbf{Job title:} &  \textbf{Graduate Research Assistant}\\  
+            \end{tabular}
+
+            \begin{highlights}
+
+                 %\item Assisted in the preparation of three grant proposals, including 4‑VA (Virginia state collaboration grant), NIH R21, and NSF submissions.
+                \item Designed and developed integrated mechatronic experimental platforms for movement-constrained sensorimotor testing, incorporating force/torque sensing and tactile/electrical stimulation to evaluate changes in human sensory perception during movement.
+                 \item Developed GUI-based software for real-time experimental control, data acquisition, and analysis in tactile perception studies.
+                 \item Developed integrated software and experimental systems using Quanser and NI DAQ platforms for 1 kHz real-time measurement and quantitative assessment of peripheral nerve responses to tactile and electrical stimuli.
+                 \item Evaluated the reliability and repeatability of median and ulnar nerve excitability and conduction measurements during tactile and electrical stimulation experiments.
+                 \item Applied threshold tracking techniques to quantitatively evaluate peripheral nerve excitability in individuals with stroke.
+                 \item Designed and developed a compact MRI-compatible haptic device incorporating a Kirigami-based structure, fiber-optic displacement sensing, and pressure sensing, enabling precise force delivery from 0–3.8 N with <0.01 N force modulation capability.
+                 \item Developed real-time force estimation algorithms for an MRI-compatible tactile stimulator using physics-based modeling and neural networks, achieving force estimation errors of 0.087 ± 0.174 N (physical model) and 0.060 ± 0.031 N (neural network) at a 3.57 N applied force level.
+                 \item Designed and implemented experimental test platforms and calibration protocols for device parameter identification and validation of physics-based force estimation models.
+                 \item Engineered an offline data acquisition framework utilizing force, displacement, and pressure sensors to enable neural network-based force estimation. 
+                % \item Led system integration for an MRI-compatible pneumatic tactile stimulator. 
+                %\item Developed experimentation and designed a benchtop to characterize tactile stimuli forces. 
+                \item Enhanced Python-based software by developing a GUI and modifying data acquisition features.
+                \item Leading and mentoring a student team in developing assistive goggle technology for individuals with brain injury and vision impairments.
+                %\item Mentored undergraduate and graduate students in different studies.
+            \end{highlights}
+        \end{twocolentry}
+
+%***********
+        \vspace{1 em}
+%***********
+        \begin{twocolentry}{
+            Turin, Italy 
+
+        2019 – 2022
+        }
+            \textbf{{\href{https://www.segulatechnologies.com/en/}{\color{black}\Large{SEGULA Technologies (assigned to General Motors)}}}} \\
+\vspace{-.6em}
+
+            \begin{tabular}{ l l l }
+            \textbf{Job title:} &  \textbf{Software Integration Engineer }    \\  
+            \end{tabular}
+                      
+            \begin{highlights}
+                \item Created an active thermal management model and updated sensor and actuator models for diesel engines within a real-time Software-in-the-Loop (SiL) framework.           
+                \item Developed automatic validation software to ensure robust and functional SiL package release to calibrating team.
+                \item Critically analyzed system errors to troubleshoot embedded vehicle systems integration.
+                \item Enhanced the integrated real-time operating system for diesel engine SiL software to ensure compatibility with the Functional Mock-up Interface (FMI) standard.
+            \end{highlights}
+        \end{twocolentry}
+%***********
+        \vspace{.2 cm}
+%***********
+        \begin{twocolentry}{
+        {\hspace{-3em}\mbox{Singapore,~Singapore}}
+
+        03/2018~–~09/2018
+        }
+            \textbf{{\href{https://www.tum-create.edu.sg/research/individual-mobility-vehicles-services}{\color{black}\Large{TUMCREATE}}}} \\
+\vspace{-.6em}
+
+            \begin{tabular}{ l l l }
+            %\textbf{Job title:} & \textbf{Research Assistant }   Mechatronics Research Engineer , Real-Time Simulation Engineer
+            \textbf{Job title:} & \textbf{Control Systems Research Engineer}  
+            \end{tabular}
+    
+            \begin{highlights}
+                \item Designed, prepared, and executed the Hardware-in-the-Loop (HiL) platform using dSPACE.
+                \item Undertook modeling, simulation implementation, and validation of a 14-degree-of-freedom (DoF) real-time simulation.
+                \item Configured TCP/IP ethernet communications between testbench and dSPACE.
+                \item Designed Control-Desk human machine interface for real-time data acquisition and testing.
+                \item Created urban environment visualization in Motion-Desk software for a driving simulator.
+            \end{highlights}
+        \end{twocolentry}
+%***********
+        \vspace{.2 cm}
+%***********
+        \begin{twocolentry}{
+            Tehran, Iran
+
+        2011 – 2015
+        }
+            \textbf{{\href{https://cast-tech.ir/}{\color{black}\Large{Center of Advanced Systems and Technologies}}}} \\
+\vspace{-.6em}
+
+            \begin{tabular}{ l l l }
+            \textbf{Job title:} &  \textbf{Research Assistant} \\  
+            \end{tabular}
+    
+            \begin{highlights}
+                \item Conducted comprehensive modeling and design verification for a manned ducted fan aerial vehicle (Jetpack).
+                \item Formulated and implemented simulation-driven gain scheduling PID controller design.
+                \item Executed intricate modeling, simulation, and control for underwater vehicles and quadrotors.
+            \end{highlights}
+        \end{twocolentry}
+%***********
+%***********
+        % \vspace{1.6 cm}
+%***********
+        \begin{twocolentry}{
+            Tehran, Iran
+
+        2010 – 2011
+        }
+            \textbf{\Large{Iranian Space Research Center}} \\
+\vspace{-.6em}
+
+            \begin{tabular}{ l l l }
+            \textbf{Job title:} &  \textbf{ADCS Researcher} \\  
+            \end{tabular}
+    
+            \begin{highlights}
+                \item Executed modeling, simulation, and feedback linearizing control of CubeSats.
+                \item Conducted safety testing of attitude determination and control algorithms through SiL and HiL evaluations.
+                \item Designed satellite test facilities: sun simulator and mass balancing for a 3-DoF air bearing test platform.
+            \end{highlights}
+        \end{twocolentry}
+
+%***********
+%***********
+        \vspace{.2 cm}
+%***********
+        \begin{twocolentry}{
+            Tehran, Iran
+
+        06/2008~–~09/2008
+        }
+            \textbf{\Large{Amirkabir University of Technology}} \\
+\vspace{-.6em}
+
+            \begin{tabular}{ l l l }
+            \textbf{Job title:} &  \textbf{Internship}	 \\  
+            \end{tabular}
+    
+            \begin{highlights}
+                % \item Designed and delivered \textbf{problem-solving lectures} on topics including Dynamics 1, Dynamics 2, and Vibrations. 
+                \item Identified methods, assumptions, and procedures for sun sensor and magnetometer calibration (Summer internship with AUTSAT1 (Amirkabir University of Technology (AUT) microsatellite))
+            \end{highlights}
+        \end{twocolentry}
+        
+%*******************************************************************************
+
+    
+%     \section{Academic Projects}
+
+% %         \vspace{0.2 cm}
+
+%         \begin{onecolentry}
+%             % \textbf{Academic Projects}
+%             \begin{highlights}
+%                 \item Tire force estimation using a multi-layer perceptron neural network
+%                 \item Model an elevator logic in united modeling language (UML), program a programmable logic controllers (PLC) and create HMI for that, having stochastic analysis by using Monte Carlo simulation to compare different passenger collection strategies
+%                 \item Finite element analysis of complete motorcycle
+%                 \item Automatic changing DXF file to UR5 command
+%                 \item Machining process and tool selection of sample workpiece (CATIA)
+%                 \item Implementation of an optimal path planning algorithm for a vehicle with a minimum turning radius (Dubins)
+%                 \item 6-DoF flight simulation in wind and body coordinate system 
+%                 \item White noise generation and gust development by using forming filter
+%                 \item Air vehicle stochastic analysis by analytical approach and Monte Carlo simulation
+%             \end{highlights}
+%         \end{onecolentry}
+
+
+
+
+
+%*******************************************************************************
+     \begin{comment}     % publications wothout link
+     \section{Publications}
+
+         \begin{onecolentry}
+         \begin{highlights}
+             \item A.Kahak*, M.S.Ahmed*, \textbf{N.Kalantaryardebily*}, H.Kulkarni, N.Gurari, S.Shahab, S.Li, "Fluidic Kirigami Meta-Surface for High-Precision Shape Morphing". (Under preparation)
+             \item E.M.Tirrell, \textbf{N.Kalantaryardebily}, J.Hocker,C.Bowles, K.Parcetich, N.Gurari, "Impact of a Cross-Modal Dual Tasking Paradigm on the Conscious Detection and Discrimination of Electrotactile Stimuli in Older Adults". (Under preparation)
+             \item \textbf{N.Kalantaryardebily}, A.C.Feldbush , A. Kahak, Suyi Li, N.Gurari, "Novel Compact Tactile Stimulator with Sensing: Application for Individuals with a Brain Injury and MRI".(Submitted to Scientific Reports)
+             \item E.M.Tirrell, \textbf{N.Kalantaryardebily}, A.C.Feldbush, L.C.Sydnor, C.Grubb, K. Parcetich, N.Gurari, " Considerations for Tactile Perceptual Assessments: Impact of Arm Dominance, Nerve, Location, and Sex in Young and Older Adults ".(Submitted to Brain Research)
+             \item A.P.Paul, K.Nayak, L. Sydnor, \textbf{N.Kalantaryardebily}, K.M. Parcetich, D.G. Miner, Q.E.Wafford, J.E.Sullivan, N.Gurari, "A Scoping Review on Examination Approaches for Identifying Tactile Deficits at the Upper Extremity in Individuals with Stroke ". Journal of Neuroengineering and Rehabilitation 21, 99 (2024)
+             \item F.Rekabi-Ban, M.Saadat, \textbf{N.Kalantaryardebily}, H.Pan, M.Stefanec, L.A.Fedotoff, T.Krajnik, F.Arvin," Active Vibration Reduction for the RoboRoyale Autonomous Robotic Observation Mechanism". 2024 IEEE Conference on Control Technology and Applications (CCTA), Newcastle upon Tyne, United Kingdom, 2024.
+             \item B.Hamedi, \textbf{N.Kalantaryardebily}, A.Alipanahi, S.Taheri, "Estimating Tire Forces using MLP Neural Network and LM Algorithm: A Comparative Study". Universal Journal of Mechanical Engineering, Vol. 11, No. 3, pp. 64 - 81, 2023
+             \item \textbf{N.Kalantaryardebily}, "Design and development of a hardware-in-the-loop test platform for powertrain," MSc thesis, 2018.
+             \item H.Basaeri, A.Yousefi-Koma, \textbf{N.Kalantaryardebily}, “Design and Modeling of a Ducted Fan Manned Aerial Vehicle,” 21st Annual International Conference on Mechanical Engineering-ISME2013, Iran.
+             \item \textbf{N.Kalantaryardebily}, M.Mortazavi, A.Babai, “Integrated Guidance and Control of UAVs Using Sliding Mode Control and Constrained Curves,” 11th Iranian Aerospace Conference 2012, Tehran, Iran (Persian).
+
+
+         \end{highlights}
+         \end{onecolentry}
+      \end{comment}    
+      
+%*******************************************************************************
+       \begin{comment}     % it is not completed
+     \section{Relevant Academic Courses}
+
+         \begin{onecolentry}
+         \begin{tabular}{p{0.05\linewidth}  p{0.9\linewidth} }
+         \textbf{M.Sc.} & Advanced Machine Learning, Automation and Control in Vehicles, Autonomous Agents and Multiagent Systems, Advanced Mathematics, Guidance and Navigation, Advanced Flight Mechanics, Optimal Control, Stochastic Control, Nonlinear Control, Model Identification, and data analysis, Computer-aided manufacturing, Electrochemical energy generators, Dynamics of mechanical system.\\
+         % \textbf{B.Sc.} & Computer programming, Electrical Measurements, Electronics 1\&2, Electrical Machines 1\&2, Technical Drawing, Power Systems Analysis 1\&2, Industrial Electronics, Thermodynamics, Linear Control Systems, Microcomputers, Electrical Installations, Modern control systems, Introduction to Intelligent systems, Filters and circuit synthesis, Process Control, Communication systems 1\&2, Linear Algebra, Digital \& Nonlinear Control, Industrial control, fundamentals of Operational research, Instrumentation…\\
+        
+         \end{tabular}
+         \end{onecolentry}
+        \end{comment}         
+%*******************************************************************************
+
+
+
+
+%*******************************************************************************
+
+%*******************************************************************************
+% \section{Language Skill}
+%         \begin{onecolentry}
+%         \begin{highlights}
+%             \item 	\textbf{English} - Fluent 
+%             \item 	\textbf{Italian} - Proficient
+%             \item 	\textbf{Persian} - Native 
+%         \end{highlights}
+%         \end{onecolentry}
+
+% %*******************************************************************************
+% % \rowcolors{1}{Lightblue}{white} 
+% \vspace{-.4em}
+% \section{Media Coverage}
+% \begin{twocolentry}{
+%         12/2025
+%         }
+% \begin{highlights}
+
+% \item {\href{https://me.vt.edu/news/briefs/kalantaryardebily-frederick-scholarship.html}{\color{black}{\textbf{Nahid Kalantaryardebily awarded Daniel Frederick Scholarship}}}} \\Virginia Tech News
+
+% \end{highlights}
+% \end{twocolentry}
+
+% \begin{twocolentry}{
+%         05/2024
+%         }
+% \begin{highlights}
+
+% \item {\href{https://news.vt.edu/videos/k/2024/05/1_ey7nyev2.html}{\color{black}{\textbf{Researching how stroke affects sense of touch}}}} \\Virginia Tech News
+
+
+
+
+% \end{highlights}
+% \end{twocolentry}
+%*******************************************************************************
+\vspace{-.4em}
+\section{Media Coverage}
+
+\begin{twocolentry}{
+        05/2026
+        }
+\begin{highlights}
+
+\item {\href{https://news.vt.edu/videos/y/2026/05/RSP82An4-zE.html}{\color{black}{\textbf{"Lived Experience" in Neurorehabilitation: Contribution to Course Development}}}} \\Virginia Tech News
+
+\end{highlights}
+\end{twocolentry}
+
+\begin{twocolentry}{
+        05/2026
+        }
+\begin{highlights}
+
+\item {\href{https://www.youtube.com/watch?v=gzf8qiftOqA}{\color{black}{\textbf{Swimming Goggle Project for Individuals With Brain Injury (Project Co-Initiator)}}}} \\Virginia Tech News
+
+\end{highlights}
+\end{twocolentry}
+
+
+\begin{twocolentry}{
+        12/2025
+        }
+\begin{highlights}
+
+\item {\href{https://me.vt.edu/news/briefs/kalantaryardebily-frederick-scholarship.html}{\color{black}{\textbf{Nahid Kalantaryardebily Awarded Daniel Frederick Scholarship}}}} \\Virginia Tech News
+
+\end{highlights}
+\end{twocolentry}
+
+
+
+\begin{twocolentry}{
+        05/2024
+        }
+\begin{highlights}
+
+\item {\href{https://news.vt.edu/videos/k/2024/05/1_ey7nyev2.html}{\color{black}{\textbf{Researching How Stroke Affects Sense of Touch}}}} \\Virginia Tech News
+
+\end{highlights}
+\end{twocolentry}
+
+\begin{twocolentry}{
+        03/2024
+        }
+\begin{highlights}
+
+\item {\href{https://news.vt.edu/videos/k/2024/03/1_e380ufit.html}{\color{black}{\textbf{Experiential Learning in Brain Injury Rehabilitation}}}} \\Virginia Tech News
+
+\end{highlights}
+\end{twocolentry}
+
+
+\vspace{-.9em}
+    \section{Computer Skills}
+    % \rowcolors{1}{lightblue}{white} 
+                \begin{tabular}{p{0.2\linewidth}  p{0.75\linewidth} }
+                \textbf{Programming:} &Python, MATLAB, C/C++,  R, Batch Scripting\\ 
+                \textbf{Python~Libraries~\& Frameworks:} & NumPy, Pandas, multiprocessing, threading, Tkinter, wxPython, Python.NET, real-time data acquisition, hardware integration, GUI development, CSV/data processing\\
+                % \textbf{Programming:} &  C/C++, Python (PyTorch, NumPy, Pandas, Tkinter/PyQt), R, MATLAB, Batch Scripting\\ 
+                \textbf{Data Acquisition:}&
+                HBM QuantumX, Quanser, dSPACE, NI DAQ \\
+                \textbf{Engineering Software:} &  MATLAB \& Simulink, LabVIEW, ControlDesk, ETAS (INCA), Mathematica, GMSim, AutoVal, SOLIDWORKS, CATIA\\ 
+                \textbf{Technical:} & Real-time systems, GUI development (PyQt/Tkinter), Machine learning (neural networks), Signal processing, TCP/IP communication, System validation\\
+                \textbf{Development Tools:} &
+                Eclipse, Visual Studio, Git\\
+                \textbf{General:} &  Windows/Mac OS, MS Office, LaTeX \\ 
+                \textbf{Additional exposure:} & Linux, PLC programming\\
+                \end{tabular}
+
+
+
+%*********************************************************************** 
+% \section{Research Interest}
+% Robotics, Haptics, Machine Learning, Filtering, System Identification, Manufacturing Automation, Production Management, Dynamics and Control, Automation, Guidance and Navigation 
+
+%**************************************************************************
+
+% Conditional block of text
+
+% \ifthenelse{\equal{\showtext}{1}}{
+%     % If showtext is 1, this text is shown
+%     This is the text that will appear if \showtext\ is set to 1.
+% }{
+%     % If showtext is 0, this text will appear
+%     This is alternate text or no text at all when \showtext\ is set to 0.
+% }
+
+\end{document}
